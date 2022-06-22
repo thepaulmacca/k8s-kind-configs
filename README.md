@@ -30,3 +30,21 @@ kubectl wait --namespace ingress-nginx \
   --selector=app.kubernetes.io/component=controller \
   --timeout=90s
 ```
+
+## Test the Ingress
+
+```bash
+kubectl apply -f ingress-test.yaml
+```
+
+Should output "foo"
+
+```bash
+curl localhost/foo
+```
+
+Should output "bar"
+
+```bash
+curl localhost/bar
+```
