@@ -23,7 +23,8 @@ kind create cluster --name <name> --config multi-node.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 ```
 
-> 📝 The manifest contains kind specific patches to forward the hostPorts to the ingress controller, set taint tolerations and schedule it to the custom labelled node
+> **Note**
+> The manifest contains kind specific patches to forward the hostPorts to the ingress controller, set taint tolerations and schedule it to the custom labelled node
 
 Now the Ingress is all setup. Wait until it's ready to process requests by running:
 
