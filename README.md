@@ -8,13 +8,16 @@ Kind was primarily designed for testing Kubernetes itself, but may be used for l
 
 # Usage
 
-## Create cluster with a config file
+## Create cluster with config file
 
 ```bash
 kind create cluster --name <name> --config multi-node.yaml
 ```
 
-## Deploy an Ingress Controller (Ingress NGINX)
+> **Note**
+> Each config file has a cluster name added to it. Parameters passed to the CLI take precedence over their equivalents in a config file.
+
+## Deploy Ingress Controller (Ingress-NGINX)
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
@@ -31,7 +34,7 @@ kubectl wait --namespace ingress-nginx \
   --timeout=90s
 ```
 
-## Test the Ingress
+## Test Ingress
 
 ```bash
 kubectl apply -f ingress-test.yaml
@@ -47,4 +50,23 @@ Should output "bar"
 
 ```bash
 curl localhost/bar
+```
+
+## Deploy Metrics-Server (Latest Release)
+
+```bash
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+```
+
+> **Note**
+> The pod will show some certificate-related errors. To fix this, edit the deployment by running the below command, and add `- --kubelet-insecure-tls` to the container arguments.
+
+```bash
+kubectl edit deploy -n kube-system metrics-server
+```
+
+### Check Metrics Server
+
+```bash
+kubectl top nodes
 ```
